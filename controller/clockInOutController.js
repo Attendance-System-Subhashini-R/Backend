@@ -88,14 +88,27 @@ const getAllClockData = async (req, res) => {
 const updateInOut = async (req, res) => {
   try {
     const { id } = req.query;
-    const { inTime, outTime, clockStatus } = req.body;
 
-    let [updateData] = await connection.execute(updateTime, [
-      inTime,
-      outTime,
-      clockStatus,
-      id,
-    ]);
+    // Initialize the base query
+    let query = "UPDATE clockinout SET ";
+    const values = [];
+
+    // Iterate over the keys in the updates object
+    for (const key in req.body) {
+      if (req.body.hasOwnProperty(key)) {
+        query += `${key} = ?, `;
+        values.push(req.body[key]);
+      }
+    }
+
+    // Remove the trailing comma and space
+    query = query.slice(0, -2);
+
+    // Add the WHERE clause
+    query += " WHERE id = ?";
+    values.push(id);
+
+    let [updateData] = await connection.execute(query, values);
 
     if (updateData) {
       return res.status(200).json({
