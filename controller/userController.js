@@ -11,6 +11,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// create user lable using query
 const createUserTable = async () => {
   try {
     await connection.execute(createuserTable);
@@ -19,6 +20,8 @@ const createUserTable = async () => {
     console.error("Error creating users table:", error.message);
   }
 };
+
+// create a new user
 
 const createUser = async (req, res) => {
   try {
@@ -44,6 +47,8 @@ const createUser = async (req, res) => {
   }
 };
 
+// get token for already registered user via login
+
 const userLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -56,8 +61,6 @@ const userLogin = async (req, res) => {
         message: "User doesn't exist",
       });
     }
-
-    console.log(userRecord[0].password);
 
     const isPasswordValid = await bcrypt.compare(
       password,

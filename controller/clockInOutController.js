@@ -8,6 +8,7 @@ import {
   updateTime,
 } from "../queries/clockInOutQuery.js";
 
+// create a new table for store timings
 const createClockTable = async () => {
   try {
     await connection.execute(createclockTableQuery);
@@ -17,6 +18,7 @@ const createClockTable = async () => {
   }
 };
 
+// create a inTime / outTime for the user
 const createInOut = async (req, res) => {
   try {
     const { inTime, outTime, clockStatus, date } = req.body;
@@ -66,6 +68,7 @@ const createInOut = async (req, res) => {
   }
 };
 
+// list all data for a user
 const getAllClockData = async (req, res) => {
   try {
     let id = req.user.id;
@@ -81,6 +84,7 @@ const getAllClockData = async (req, res) => {
   }
 };
 
+//  update time using particular time frame
 const updateInOut = async (req, res) => {
   try {
     const { id } = req.query;

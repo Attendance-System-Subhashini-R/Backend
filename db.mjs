@@ -1,11 +1,13 @@
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
 
+// Load environment variables
 dotenv.config();
 
 let connection;
 
 try {
+  // Create a new connection to the MySQL database using environment variables
   connection = await mysql.createConnection({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
